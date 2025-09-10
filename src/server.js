@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const db = require("./config/database");
 
-// Models
+// Models 
 const User = require("./models/user");
 const Post = require("./models/post");
 const Comment = require("./models/comment");

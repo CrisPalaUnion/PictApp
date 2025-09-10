@@ -75,6 +75,39 @@ const register = async (req = request, res = response) => {
     }
 }
 
+/**
+ * Visualize user profile
+ * localhost:8080/
+ */
+const viewProfile = async(req = request, res = response) => {
+    const {id} = req.params
+
+    try {
+        const user = await User.findById(id, {
+            attributes: {exclude : ['password','email','createdAt','date']}
+        })
+
+        if (!user){
+            return res.status(404).json({msg: "user not found"})
+        }
+
+        if (user.disabled){
+            return res.status(410).json({msg: "user is deleted"})
+        }
+
+        res.status(200).json({
+            data:user,
+            msg:"User sussesfull"
+        })
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg:"error en el server"
+        })
+    }
+}
+
 module.exports = {
     register
 }
